@@ -7,8 +7,13 @@ const whiteList = ['/login', '/404']
 // 路由全局前置守卫
 router.beforeEach((to, from, next) => {
   const token = store.state.user.token
+  //   console.log(token)
   //登录了
   if (token) {
+    if (!store.state.user.userInfo.userId) {
+      // 获取用户信息
+      store.dispatch('user/getUserInfo')
+    }
     //如果访问的登录页
     if (to.path === '/login') {
       // 跳回主页
@@ -18,6 +23,7 @@ router.beforeEach((to, from, next) => {
       next()
     }
   } else {
+    console.log(123)
     //没有登录
     const isCludes = whiteList.includes(to.path)
     if (isCludes) {
@@ -28,5 +34,4 @@ router.beforeEach((to, from, next) => {
       next('/login')
     }
   }
-  next()
 })

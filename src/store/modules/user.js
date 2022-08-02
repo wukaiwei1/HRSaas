@@ -1,20 +1,33 @@
-import { login } from '@/api/user'
+import { getUserDetailsApi, getUserInfoApi, login } from '@/api/user'
 export default {
   namespaced: true,
   state: {
-    token: ''
+    // 用户token
+    token: '',
+    // 用户信息
+    userInfo: {}
   },
   mutations: {
     // 存储用户token
     setToken(state, payload) {
       state.token = payload
+    },
+    // 存储用户信息
+    setUserinfo(state, payload) {
+      state.userInfo = payload
     }
   },
   actions: {
+    // 登录请求
     async getToken(context, payload) {
       const data = await login(payload)
-      console.log(data)
       context.commit('setToken', data)
+    },
+    // 获取用户信息
+    async getUserInfo(context) {
+      const userBaseInfo = await getUserInfoApi()
+      const userInfo = await getUserDetailsApi(userBaseInfo.userId)
+      context.commit('setUserinfo', { ...userBaseInfo, ...userInfo })
     }
   }
 }

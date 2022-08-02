@@ -1,5 +1,5 @@
 module.exports = {
-// 网站标题
+  // 网站标题
   title: 'HRsaas',
 
   /**
