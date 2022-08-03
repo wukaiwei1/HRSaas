@@ -23,7 +23,6 @@ router.beforeEach((to, from, next) => {
       next()
     }
   } else {
-    console.log(123)
     //没有登录
     const isCludes = whiteList.includes(to.path)
     if (isCludes) {
