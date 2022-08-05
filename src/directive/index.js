@@ -3,6 +3,18 @@
 export const imgError = {
   inserted(el, binding) {
     // 图片加载失败事件
+    if (el.src.length === 0) {
+      el.src = binding.value
+    }
+    el.onerror = () => {
+      el.src = binding.value
+    }
+  },
+  update(el, binding) {
+    // 图片加载失败事件
+    if (el.src.length === 0) {
+      el.src = binding.value
+    }
     el.onerror = () => {
       el.src = binding.value
     }
