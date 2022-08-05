@@ -13,7 +13,9 @@
               <el-dropdown-item>添加部门</el-dropdown-item>
               <template v-if="!isRoot">
                 <el-dropdown-item>编辑部门</el-dropdown-item>
-                <el-dropdown-item>删除部门</el-dropdown-item>
+                <el-dropdown-item @click.native="onRemove"
+                  >删除部门</el-dropdown-item
+                >
               </template>
             </el-dropdown-menu>
           </el-dropdown>
@@ -24,6 +26,7 @@
 </template>
 
 <script>
+import { delDeptsApi } from '@/api/department'
 export default {
   props: {
     treeData: {
@@ -41,10 +44,24 @@ export default {
 
   created() {},
 
-  methods: {}
+  methods: {
+    // 删除部门
+    async onRemove() {
+      try {
+        await this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        })
+        // 删除部门请求
+        await delDeptsApi(this.treeData.id)
+        this.$message.success('删除成功')
+        // 触发父级的获取部门请求的方法，更新数据
+        this.$emit('remove')
+      } catch (error) {}
+    }
+  }
 }
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

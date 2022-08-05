@@ -15,7 +15,7 @@
           default-expand-all
         >
           <template v-slot="scope">
-            <treeTools :treeData="scope.data"></treeTools>
+            <treeTools :treeData="scope.data" @remove="getDepts"></treeTools>
           </template>
         </el-tree>
       </el-card>
@@ -53,9 +53,8 @@ export default {
     // 获取组织架构数据
     async getDepts() {
       const res = await getDeptsApi()
-
       this.treeData = transListToTree(res.depts, '')
-      console.log(this.treeData);
+      console.log(this.treeData)
     }
   },
   components: {

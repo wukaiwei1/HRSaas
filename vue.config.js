@@ -40,7 +40,8 @@ module.exports = {
     proxy: {
       // 只有/api开头的请求才会向远程服务器发送请求
       '/api': {
-        target: 'http://ihrm-java.itheima.net/',
+        // target: 'http://ihrm-java.itheima.net/',
+        target: 'http://ihrm.itheima.net/',
         changeOrigin: true
       }
     }
