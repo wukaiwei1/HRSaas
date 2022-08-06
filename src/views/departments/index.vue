@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-container">
     <div class="app-container">
-      <el-card class="box-card">
+      <el-card class="box-card" v-loading="loading">
         <!-- 头部 -->
         <treeTools
           @add="isShowAddDept"
@@ -20,6 +20,7 @@
               :treeData="scope.data"
               @remove="getDepts"
               @add="isShowAddDept"
+              @edit="showEdit"
             ></treeTools>
           </template>
         </el-tree>
@@ -27,6 +28,7 @@
     </div>
     <!-- 添加部门弹框 -->
     <add-dept
+      ref="addDept"
       :visible.sync="dialogVisible"
       :DepartmentData="DepartmentData"
       @add-success="getDepts"
@@ -54,7 +56,8 @@ export default {
       },
       dialogVisible: false,
       // 点击添加时的部门数据
-      DepartmentData: {}
+      DepartmentData: {},
+      loading: false
     }
   },
 
@@ -67,15 +70,23 @@ export default {
     handleNodeClick() {},
     // 获取组织架构数据
     async getDepts() {
+      this.loading = true
       const res = await getDeptsApi()
       this.treeData = transListToTree(res.depts, '')
       console.log(this.treeData)
+      this.loading = false
     },
     // 添加部门
     isShowAddDept(value) {
       // 显示弹框
       this.dialogVisible = true
       this.DepartmentData = value
+    },
+    //编辑部门
+    showEdit(val) {
+      // 显示弹框
+      this.dialogVisible = true
+      this.$refs.addDept.getDeptById(val.id)
     }
   },
   components: {

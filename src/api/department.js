@@ -31,3 +31,27 @@ export const addDeptsApi = (data) => {
     data
   })
 }
+
+/**
+ * 根据ID查询部门详情
+ * @param {*} id 部门ID
+ * @returns Promise
+ */
+export const getDeptByIdApi = (id) => {
+  return request({
+    url: `/company/department/${id}`
+  })
+}
+
+/**
+ * 根据ID查询部门详情
+ * @param {*} id 部门ID
+ * @returns Promise
+ */
+export const changeDeptByIdApi = (data) => {
+  return request({
+    url: `/company/department/${data.id}`,
+    method: 'PUT',
+    data
+  })
+}
