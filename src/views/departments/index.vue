@@ -4,6 +4,7 @@
       <el-card class="box-card">
         <!-- 头部 -->
         <treeTools
+          @add="isShowAddDept"
           :treeData="{ name: '传智教育', manager: '负责人' }"
           :isRoot="true"
         ></treeTools>
@@ -15,11 +16,21 @@
           default-expand-all
         >
           <template v-slot="scope">
-            <treeTools :treeData="scope.data" @remove="getDepts"></treeTools>
+            <treeTools
+              :treeData="scope.data"
+              @remove="getDepts"
+              @add="isShowAddDept"
+            ></treeTools>
           </template>
         </el-tree>
       </el-card>
     </div>
+    <!-- 添加部门弹框 -->
+    <add-dept
+      :visible.sync="dialogVisible"
+      :DepartmentData="DepartmentData"
+      @add-success="getDepts"
+    />
   </div>
 </template>
 
@@ -27,6 +38,7 @@
 import treeTools from './components/tree-tools.vue'
 import { getDeptsApi } from '@/api/department'
 import { transListToTree } from '@/utils'
+import addDept from './components/add-dept.vue'
 export default {
   data() {
     return {
@@ -39,7 +51,10 @@ export default {
       // 配置选项
       defaultProps: {
         label: 'name'
-      }
+      },
+      dialogVisible: false,
+      // 点击添加时的部门数据
+      DepartmentData: {}
     }
   },
 
@@ -55,10 +70,17 @@ export default {
       const res = await getDeptsApi()
       this.treeData = transListToTree(res.depts, '')
       console.log(this.treeData)
+    },
+    // 添加部门
+    isShowAddDept(value) {
+      // 显示弹框
+      this.dialogVisible = true
+      this.DepartmentData = value
     }
   },
   components: {
-    treeTools
+    treeTools,
+    addDept
   }
 }
 </script>

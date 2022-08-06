@@ -10,7 +10,7 @@
               操作<i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>添加部门</el-dropdown-item>
+              <el-dropdown-item @click.native="$emit('add',treeData)">添加部门</el-dropdown-item>
               <template v-if="!isRoot">
                 <el-dropdown-item>编辑部门</el-dropdown-item>
                 <el-dropdown-item @click.native="onRemove"
