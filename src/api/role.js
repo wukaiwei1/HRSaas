@@ -28,3 +28,15 @@ export const addRolesApi = (data) => {
     data
   })
 }
+
+/**
+ *  删除角色
+ * @param {Object} id 角色id
+ * @returns Promise
+ */
+export const removeRolesApi = (id) => {
+  return request({
+    url: `/sys/role/${id}`,
+    method: 'DELETE'
+  })
+}

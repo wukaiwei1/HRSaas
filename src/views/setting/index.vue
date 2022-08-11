@@ -17,10 +17,15 @@
             <el-table-column prop="name" label="角色"> </el-table-column>
             <el-table-column prop="description" label="描述"> </el-table-column>
             <el-table-column label="操作">
-              <template>
+              <template slot-scope="scope">
                 <el-button size="small" type="success">分配权限</el-button>
                 <el-button size="small" type="primary">编辑</el-button>
-                <el-button size="small" type="danger">删除</el-button>
+                <el-button
+                  size="small"
+                  type="danger"
+                  @click="removeRole(scope.row)"
+                  >删除</el-button
+                >
               </template>
             </el-table-column>
           </el-table>
@@ -93,7 +98,7 @@
 </template>
 
 <script>
-import { addRolesApi, getRolesApi } from '@/api/role'
+import { addRolesApi, getRolesApi, removeRolesApi } from '@/api/role'
 import { getCompanyInfoApi } from '@/api/setting'
 export default {
   data() {
@@ -171,6 +176,20 @@ export default {
         this.$store.state.user.userInfo.companyId
       )
       this.companyInfo = res
+    },
+    async removeRole(val) {
+      try {
+        await this.$confirm('确认删除该角色嘛', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        })
+        await removeRolesApi(val.id)
+        this.getRoles()
+        this.$message.success('角色删除成功')
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }
