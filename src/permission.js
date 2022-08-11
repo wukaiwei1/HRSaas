@@ -5,14 +5,14 @@ import store from '@/store'
 // 白名单（不用登录也能访问）
 const whiteList = ['/login', '/404']
 // 路由全局前置守卫
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const token = store.state.user.token
   //   console.log(token)
   //登录了
   if (token) {
     if (!store.state.user.userInfo.userId) {
       // 获取用户信息
-      store.dispatch('user/getUserInfo')
+      await store.dispatch('user/getUserInfo')
     }
     //如果访问的登录页
     if (to.path === '/login') {
