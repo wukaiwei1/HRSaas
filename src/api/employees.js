@@ -8,3 +8,14 @@ export const getEmployeesList = () => {
     url: '/sys/user/simple'
   })
 }
+
+/*  获取员工列表
+ * @param {} params {page,size}
+ * @returns Promise
+ */
+export const getEmployeesInfoApi = (params) => {
+  return request({
+    url: '/sys/user',
+    params
+  })
+}

@@ -25,6 +25,11 @@ import * as directive from '@/directive'
  * Currently MockJs will be used in the production environment,
  * please remove it before going online ! ! !
  */
+// 注册全局组件
+import pageTools from './components'
+
+Vue.use(pageTools)
+
 if (process.env.NODE_ENV === 'production') {
   const { mockXHR } = require('../mock')
   mockXHR()
