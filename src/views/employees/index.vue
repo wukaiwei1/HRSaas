@@ -10,7 +10,9 @@
             @click="$router.push('/import')"
             >导入</el-button
           >
-          <el-button size="small" type="danger">导出</el-button>
+          <el-button size="small" type="danger" @click="exportExcel"
+            >导出</el-button
+          >
           <el-button size="small" type="primary" @click="addEmployeeFn"
             >新增员工</el-button
           >
@@ -100,6 +102,7 @@
 import { getEmployeesInfoApi, delEmployee } from '@/api/employees'
 import employees from '@/constant/employees'
 import addEmployees from './commponents/add-employees.vue'
+const { exportExcelMapPath, hireType } = employees
 export default {
   data() {
     return {
@@ -145,6 +148,32 @@ export default {
     // 点击新增员工
     addEmployeeFn() {
       this.isShowAddDept = true
+    },
+    // 导出员工
+    async exportExcel() {
+      const { export_json_to_excel } = await import('@/vendor/Export2Excel.js')
+      const { rows } = await getEmployeesInfoApi({ page: 1, size: this.total })
+
+      const header = Object.keys(exportExcelMapPath)
+      const data = rows.map((item) => {
+        return header.map((row) => {
+          if (row === '聘用形式') {
+            const findItem = hireType.find((hire) => {
+              return hire.id === item[exportExcelMapPath[row]]
+            })
+            return findItem ? findItem.value : '未知'
+          } else {
+            return item[exportExcelMapPath[row]]
+          }
+        })
+      })
+      export_json_to_excel({
+        header, //表头 必填
+        data, //具体数据 必填
+        filename: 'excel-list', //非必填
+        autoWidth: true, //非必填
+        bookType: 'xlsx' //非必填
+      })
     }
   },
   components: {
