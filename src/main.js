@@ -19,6 +19,11 @@ import * as directive from '@/directive'
 
 // 注册全局组件
 import pageTools from './components'
+
+// 打印功能包
+import print from 'vue-print-nb'
+console.log(print)
+Vue.use(print)
 Vue.use(pageTools)
 
 if (process.env.NODE_ENV === 'production') {

@@ -35,6 +35,7 @@
                   border-radius: 50%;
                   padding: 10px;
                 "
+                @click="showErcodeDialog(row.staffPhoto)"
               />
             </template>
           </el-table-column>
@@ -100,6 +101,11 @@
       :isShowAddDept.sync="isShowAddDept"
       @addEmployee="getEmployeesList"
     ></add-employees>
+
+    <!-- 头像弹框 -->
+    <el-dialog title="用户头像" :visible.sync="isErcodeDialog">
+      <canvas id="canvas"></canvas>
+    </el-dialog>
   </div>
 </template>
 
@@ -108,6 +114,7 @@ import { getEmployeesInfoApi, delEmployee } from '@/api/employees'
 import employees from '@/constant/employees'
 import addEmployees from './commponents/add-employees.vue'
 const { exportExcelMapPath, hireType } = employees
+import QRcode from 'qrcode'
 export default {
   data() {
     return {
@@ -118,7 +125,8 @@ export default {
         size: 5
       },
       total: 0,
-      isShowAddDept: false
+      isShowAddDept: false,
+      isErcodeDialog: false
     }
   },
 
@@ -178,6 +186,17 @@ export default {
         filename: 'excel-list', //非必填
         autoWidth: true, //非必填
         bookType: 'xlsx' //非必填
+      })
+    },
+    // 点击头像显示二维码
+    showErcodeDialog(photo) {
+      if (!photo) {
+        return this.$message.error('该用户还未上传头像')
+      }
+      this.isErcodeDialog = true
+      this.$nextTick(() => {
+        const canvas = document.getElementById('canvas')
+        QRcode.toCanvas(canvas, photo)
       })
     }
   },
