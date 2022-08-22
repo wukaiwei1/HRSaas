@@ -73,7 +73,7 @@ export default {
       this.loading = true
       const res = await getDeptsApi()
       this.treeData = transListToTree(res.depts, '')
-      console.log(this.treeData)
+
       this.loading = false
     },
     // 添加部门

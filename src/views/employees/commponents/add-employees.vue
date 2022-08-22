@@ -159,7 +159,6 @@ export default {
     onAddemployees() {
       this.$refs.form.validate(async (valid) => {
         if (!valid) return
-        console.log('发送请求')
         await addEmployee(this.formData)
         this.$message.success('添加员工成功')
         this.onClose()

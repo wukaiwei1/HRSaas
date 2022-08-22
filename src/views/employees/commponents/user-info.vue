@@ -495,7 +495,6 @@ export default {
     },
     async onSeveEmployeesInfo() {
       if (this.$refs.employeesPic.loading) {
-        console.log(123)
         return this.$message.error('图片正在上传，请稍后')
       }
       await updatePersonal(this.formData)

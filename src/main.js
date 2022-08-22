@@ -22,7 +22,7 @@ import pageTools from './components'
 
 // 打印功能包
 import print from 'vue-print-nb'
-console.log(print)
+
 Vue.use(print)
 Vue.use(pageTools)
 

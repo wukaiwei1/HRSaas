@@ -1,5 +1,5 @@
 // 定义自定义指令
-
+import store from '@/store'
 export const imgError = {
   inserted(el, binding) {
     // 图片加载失败事件
@@ -23,6 +23,12 @@ export const imgError = {
   }
 }
 
-export const test = {
-  inserted() {}
+export const isHas = {
+  inserted(el, binding) {
+    const flag = store.state.permission.points.includes(binding.value)
+    console.log(flag)
+    if (!flag) {
+      el.remove()
+    }
+  }
 }

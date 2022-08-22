@@ -8,12 +8,18 @@
             size="small"
             type="warning"
             @click="$router.push('/import')"
+            s
+            v-isHas="point.employeesText.import"
             >导入</el-button
           >
           <el-button size="small" type="danger" @click="exportExcel"
             >导出</el-button
           >
-          <el-button size="small" type="primary" @click="addEmployeeFn"
+          <el-button
+            size="small"
+            type="primary"
+            @click="addEmployeeFn"
+            v-if="isHas(point.employeesText.add)"
             >新增员工</el-button
           >
         </template>
@@ -73,8 +79,14 @@
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
-              <el-button type="text" size="small">角色</el-button>
-              <el-button type="text" size="small" @click="delFn(row.id)"
+              <el-button type="text" size="small" @click="isShowRoleFn(row.id)"
+                >角色</el-button
+              >
+              <el-button
+                type="text"
+                size="small"
+                @click="delFn(row.id)"
+                :disabled="!isHas(point.employeesText.del)"
                 >删除</el-button
               >
             </template>
@@ -106,6 +118,12 @@
     <el-dialog title="用户头像" :visible.sync="isErcodeDialog">
       <canvas id="canvas"></canvas>
     </el-dialog>
+
+    <!-- 添加角色弹框 -->
+    <assing-role
+      :isShowRoleDialog.sync="isShowRoleDialog"
+      :employeesId="currentEmployeesId"
+    />
   </div>
 </template>
 
@@ -113,6 +131,8 @@
 import { getEmployeesInfoApi, delEmployee } from '@/api/employees'
 import employees from '@/constant/employees'
 import addEmployees from './commponents/add-employees.vue'
+import assingRole from './commponents/assign-role.vue'
+import permissionMixin from '@/mixins/permission'
 const { exportExcelMapPath, hireType } = employees
 import QRcode from 'qrcode'
 export default {
@@ -126,10 +146,12 @@ export default {
       },
       total: 0,
       isShowAddDept: false,
-      isErcodeDialog: false
+      isErcodeDialog: false,
+      isShowRoleDialog: false,
+      currentEmployeesId: ''
     }
   },
-
+  mixins: [permissionMixin],
   created() {
     this.getEmployeesList()
   },
@@ -198,10 +220,16 @@ export default {
         const canvas = document.getElementById('canvas')
         QRcode.toCanvas(canvas, photo)
       })
+    },
+    // 点击角色
+    isShowRoleFn(id) {
+      this.isShowRoleDialog = true
+      this.currentEmployeesId = id
     }
   },
   components: {
-    addEmployees
+    addEmployees,
+    assingRole
   }
 }
 </script>

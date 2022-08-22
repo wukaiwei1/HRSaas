@@ -32,7 +32,7 @@ const cos = new COS({
   SecretId: 'AKID98q7C2dy3tUr0tXv3vYv3wZx5xZw5yaw',
   SecretKey: '6vTklW0DBuNaYIm13pLbbMs88tOdcNtA'
 })
-console.log(cos)
+
 export default {
   name: 'upLoadImg',
   data() {
@@ -71,13 +71,13 @@ export default {
     },
     onChange(file, fileList) {
       this.fileList = fileList
-      console.log(this.fileList)
+
     },
     onRemove(file, fileList) {
       this.fileList = fileList
     },
     onPreview(file) {
-      console.log(file)
+
       this.imgUrl = file.url
       this.isShowDialog = true
     },
@@ -86,7 +86,7 @@ export default {
       const types = ['image/jpeg', 'image/gif']
       if (!types.includes(file.type)) {
         this.$message.error('请选择' + types.join('或') + '图片')
-        console.log(123)
+
         return false
       }
       // 限制图片大小

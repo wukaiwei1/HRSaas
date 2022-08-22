@@ -178,7 +178,7 @@ export default {
           this.$emit('add-success')
           // 关闭对话框
           this.onClose()
-          console.log(213)
+
         } else {
           this.formData.pid = this.DepartmentData.id
           await addDeptsApi(this.formData)
@@ -187,7 +187,7 @@ export default {
           this.$emit('add-success')
           // 关闭对话框
           this.onClose()
-          console.log(456)
+
         }
       } catch (error) {
         this.$message.error('操作部门失败')

@@ -1,5 +1,5 @@
 // 权限控制
-import router from '@/router'
+import router, { asyncRoutes, resetRouter } from '@/router'
 import store from '@/store'
 
 // 白名单（不用登录也能访问）
@@ -11,8 +11,11 @@ router.beforeEach(async (to, from, next) => {
   //登录了
   if (token) {
     if (!store.state.user.userInfo.userId) {
-      // 获取用户信息
-      await store.dispatch('user/getUserInfo')
+      // 获取用户信息  store.dispatch的返回值是promise
+      const { roles } = await store.dispatch('user/getUserInfo')
+      
+      await store.dispatch('permission/filterRoutes', roles)
+      next(to.path)
     }
     //如果访问的登录页
     if (to.path === '/login') {
@@ -30,6 +33,7 @@ router.beforeEach(async (to, from, next) => {
       next()
     } else {
       // 不是白名单，则跳转登录页
+      resetRouter()
       next('/login')
     }
   }
