@@ -7,21 +7,22 @@
     />
     <!-- 侧边栏 -->
     <sidebar class="sidebar-container" />
-    <!-- 头部部分 -->
+    <!-- 主体内容 -->
     <div class="main-container">
-      <!-- 主体头部部分 -->
+      <!-- 头部 -->
       <div :class="{ 'fixed-header': fixedHeader }">
-        <!-- 头部组件 -->
+        <!-- 头部navbar组件 -->
         <navbar />
+        <Tags-view />
       </div>
-      <!-- 二级路由占位组件 -->
+      <!-- 肯定是子路由占位 -->
       <app-main />
     </div>
   </div>
 </template>
 
 <script>
-import { Navbar, Sidebar, AppMain } from './components'
+import { Navbar, Sidebar, AppMain, TagsView } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 
 export default {
@@ -30,6 +31,7 @@ export default {
     Navbar,
     Sidebar,
     AppMain,
+    TagsView
   },
   mixins: [ResizeMixin],
   computed: {
@@ -47,15 +49,15 @@ export default {
         hideSidebar: !this.sidebar.opened,
         openSidebar: this.sidebar.opened,
         withoutAnimation: this.sidebar.withoutAnimation,
-        mobile: this.device === 'mobile',
+        mobile: this.device === 'mobile'
       }
-    },
+    }
   },
   methods: {
     handleClickOutside() {
       this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
-    },
-  },
+    }
+  }
 }
 </script>
 

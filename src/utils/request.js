@@ -2,68 +2,59 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
 import store from '@/store'
-import { getTokenTime } from './auth'
+import { getTokenTime } from '@/utils/auth'
 import router from '@/router'
-// 创建一个axios的实例
-const service = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API,
-  timeout: 5000
-})
-// 判断token是否过期
-function timeOut() {
-  // 本地的token时间戳
-  const tokenTime = getTokenTime()
-  // 当前发送请求的时间戳
+
+function isTimeOut() {
   const currentTime = Date.now()
-  // token过期的时效
-  const timeOut = 2 * 60 * 60 * 1000
-  return currentTime - tokenTime > timeOut
+  const tokenTime = getTokenTime()
+  const timeout = 2 * 60 * 60 * 1000
+  return currentTime - tokenTime > timeout
 }
 
-// 请求拦截器
-service.interceptors.request.use(async (comfig) => {
-  // 注入token,本地存在token
+const service = axios.create({
+  baseURL: process.env.VUE_APP_BASE_API,
+  // 3套
+  // 开发期间
+  // 测试的
+  // 线上的
+  timeout: 5000,
+}) // 创建一个axios的实例
+service.interceptors.request.use(async (config) => {
+  // 当前请求的配置
   if (store.state.user.token) {
-    if (timeOut()) {
-      // 如果超时，执行退出功能
+    if (isTimeOut()) {
       await store.dispatch('user/logout')
-      // 跳转页面
       router.push('/login')
-      // 抛出错误
       return Promise.reject(new Error('登录过期'))
     } else {
-      comfig.headers.Authorization = 'Bearer ' + store.state.user.token
+      config.headers.Authorization = 'Bearer ' + store.state.user.token
     }
   }
-  return comfig
-})
-// 响应拦截器
+  return config
+}) // 请求拦截器
 service.interceptors.response.use(
-  // 请求返回resolve对象
   (res) => {
-    const { data, success, message } = res.data
-    // 数据响应成功
+    // 请求成功的函数
+    const { success, data, message } = res.data
     if (success) {
       return data
     }
-    // 失败返回错误提示
     Message.error(message)
     return Promise.reject(new Error(message))
   },
-  // 请求失败返回reject对象
-  async (error) => {
+  async function (error) {
+    // 对响应错误做点什么
+    // es11
     if (error?.response?.status === 401) {
       Message.error('登录过期')
-      // 如果超时，执行退出功能
       await store.dispatch('user/logout')
-      // 跳转页面
       router.push('/login')
     } else {
-      // 错误提示
       Message.error(error.message)
     }
+
     return Promise.reject(error)
   }
-)
-// 导出axios实例
-export default service
+) // 响应拦截器
+export default service // 导出axios实例

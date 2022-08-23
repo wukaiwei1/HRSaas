@@ -14,15 +14,15 @@ export default {
   props: {
     collapse: {
       type: Boolean,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       title: 'Vue Admin Template',
-      logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+      logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png',
     }
-  }
+  },
 }
 </script>
 
@@ -41,7 +41,7 @@ export default {
   width: 100%;
   height: 50px;
   line-height: 50px;
-  // background: #5b8cff;
+  // background: #2b2f3a;
   text-align: center;
   overflow: hidden;
 

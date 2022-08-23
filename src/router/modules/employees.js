@@ -3,17 +3,19 @@ export default {
   path: '/employees',
   component: Layout,
   meta: {
-    id: 'employees' // 用来匹配后端返回来的用户权限
+    id: 'employees' // 用来和后端权限做约定的
   },
   children: [
     {
       path: '',
       component: () => import('@/views/employees'),
-      meta: { title: '员工', icon: 'people' }
+      meta: { title: '员工', icon: 'people' },
+      name: 'employees'
     },
     {
       path: 'detail/:id',
       component: () => import('@/views/employees/detail'),
+      props: true,
       hidden: true
     },
     {

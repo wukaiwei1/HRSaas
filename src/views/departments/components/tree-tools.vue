@@ -1,20 +1,20 @@
 <template>
-  <el-row type="flex" style="width: 100%">
-    <el-col>{{ treeData.name }}</el-col>
-    <el-col :span="4">
+  <el-row style="width: 100%" type="flex">
+    <el-col>{{ treeNode.name }}</el-col>
+    <el-col :span="5">
       <el-row type="flex">
-        <el-col>{{ treeData.manager }}</el-col>
+        <el-col>{{ treeNode.manager }}</el-col>
         <el-col>
           <el-dropdown>
             <span class="el-dropdown-link">
               操作<i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item @click.native="$emit('add', treeData)"
+              <el-dropdown-item @click.native="$emit('add', treeNode)"
                 >添加部门</el-dropdown-item
               >
               <template v-if="!isRoot">
-                <el-dropdown-item @click.native="$emit('edit', treeData)"
+                <el-dropdown-item @click.native="$emit('edit', treeNode)"
                   >编辑部门</el-dropdown-item
                 >
                 <el-dropdown-item @click.native="onRemove"
@@ -30,42 +30,41 @@
 </template>
 
 <script>
-import { delDeptsApi } from '@/api/department'
+import { delDeptsApi } from '@/api/departments'
 export default {
+  name: 'TreeTools',
+  data() {
+    return {}
+  },
+
   props: {
-    treeData: {
+    treeNode: {
       type: Object,
-      required: true
+      required: true,
     },
     isRoot: {
       type: Boolean,
-      default: false
-    }
-  },
-  data() {
-    return {}
+      default: false,
+    },
   },
 
   created() {},
 
   methods: {
-    // 删除部门
     async onRemove() {
       try {
-        await this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
-          confirmButtonText: '确定',
+        await this.$confirm('此操作将永久删除该部门, 是否继续?', '提示', {
+          confirmButtonText: '删除',
           cancelButtonText: '取消',
-          type: 'warning'
+          type: 'warning',
         })
-        // 删除部门请求
-        await delDeptsApi(this.treeData.id)
+        await delDeptsApi(this.treeNode.id)
         this.$message.success('删除成功')
-        // 触发父级的获取部门请求的方法，更新数据
         this.$emit('remove')
-      } catch (error) {}
-    }
-  }
+      } catch (err) {}
+    },
+  },
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="less"></style>

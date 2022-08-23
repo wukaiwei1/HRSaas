@@ -40,7 +40,7 @@ export function parseTime(time, cFormat) {
     h: date.getHours(),
     i: date.getMinutes(),
     s: date.getSeconds(),
-    a: date.getDay()
+    a: date.getDay(),
   }
   const time_str = format.replace(/{([ymdhisa])+}/g, (result, key) => {
     const value = formatObj[key]
@@ -119,18 +119,19 @@ export function param2Obj(url) {
 }
 
 /**
- *  将list数据转换为treeList数据
- * @param {Array} data 处理的数据
- * @param {} pid id
- * @returns Promise
+ * 将list数据处理为treeList
+ * @param {*} data 要处理的数据
+ * @param {*} pid 父级id
+ * @returns treeList
  */
 export function transListToTree(data, pid) {
   const arr = []
   data.forEach((item) => {
     if (item.pid === pid) {
-      const childRen = transListToTree(data, item.id)
-      if (childRen.length) {
-        item.children = childRen
+      // 当前: item 就是1级数据 item.id
+      const children = transListToTree(data, item.id)
+      if (children.length) {
+        item.children = children
       }
       arr.push(item)
     }

@@ -13,6 +13,8 @@
     </div>
 
     <div class="right-menu">
+      <toggle-lang />
+      <Full-screen />
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <img
@@ -28,7 +30,7 @@
             <el-dropdown-item> Home </el-dropdown-item>
           </router-link>
           <el-dropdown-item divided @click.native="logout">
-            <span style="display: block">退出</span>
+            <span style="display: block">Log Out</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -40,13 +42,13 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import defaultImg from '@/assets/common/head.jpg'
 
 export default {
+  // 如果想在data中定义本地图片路径,需要先引入
   data() {
     return {
-      // 默认图片
-      defaultImg:
-        'https://img1.baidu.com/it/u=1966616150,2146512490&fm=253&fmt=auto&app=138&f=JPEG?w=751&h=500'
+      defaultImg
     }
   },
   components: {
@@ -73,7 +75,6 @@ export default {
   height: 50px;
   overflow: hidden;
   position: relative;
-  // background: #fff;
   background-image: -webkit-linear-gradient(left, #3d6df8, #5b8cff);
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 
@@ -95,6 +96,7 @@ export default {
       margin-left: 15px;
     }
   }
+
   .hamburger-container {
     line-height: 46px;
     height: 100%;
@@ -118,6 +120,7 @@ export default {
     float: right;
     height: 100%;
     line-height: 50px;
+    display: flex;
 
     &:focus {
       outline: none;
@@ -150,9 +153,11 @@ export default {
         align-items: center;
         color: #fff;
         cursor: pointer;
+
         span {
-          margin: 0 8px;
+          margin: 0 3px;
         }
+
         .user-avatar {
           cursor: pointer;
           width: 40px;
@@ -164,7 +169,6 @@ export default {
           cursor: pointer;
           position: absolute;
           right: -20px;
-          top: 25px;
           font-size: 12px;
         }
       }

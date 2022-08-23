@@ -1,48 +1,45 @@
 <template>
   <div class="login-container">
+    <!-- 表单校验 1. 添加model属性: 整个表单数据 -->
+    <!-- 表单校验 2. 添加rules属性: 整个表单校验规则 -->
     <el-form
       ref="loginForm"
       class="login-form"
       auto-complete="on"
       label-position="left"
       :model="loginForm"
-      :rules="loginFormrules"
+      :rules="loginFormRules"
     >
-      <!-- 图片标题 -->
+      <!-- 放置标题图片 @是设置的别名-->
       <div class="title-container">
         <h3 class="title">
           <img src="@/assets/common/login-logo.png" alt="" />
         </h3>
       </div>
 
-      <!-- 手机号 -->
+      <!-- 表单区域 -->
       <el-form-item prop="mobile">
-        <!-- 字体图标 -->
         <i class="el-icon-user-solid svg-container"></i>
         <el-input v-model="loginForm.mobile"></el-input>
       </el-form-item>
-
-      <!-- 密码 -->
       <el-form-item prop="password">
-        <!-- svg组件 -->
         <i class="svg-container">
           <svg-icon iconClass="password"></svg-icon>
         </i>
         <el-input type="password" v-model="loginForm.password"></el-input>
       </el-form-item>
 
-      <!-- 登录按钮 -->
       <el-button
         type="primary"
         class="loginBtn"
         style="width: 100%; margin-bottom: 30px"
+        :loading="isLogin"
         @click="login"
-        :loading="loginloading"
         >登录</el-button
       >
-      <!-- 提示框 -->
+
       <div class="tips">
-        <span style="margin-right: 20px">账号: 13800000002</span>
+        <span style="margin-right: 20px">用户名: 13800000002</span>
         <span> 密码: 123456</span>
       </div>
     </el-form>
@@ -54,55 +51,48 @@ export default {
   name: 'Login',
   data() {
     return {
+      // 1. 定义数据
       loginForm: {
-        mobile: '13800000001',
-        password: '123456'
+        mobile: '13800000002',
+        password: '123456',
       },
-      loginFormrules: {
+      loginFormRules: {
+        // 规则名和数据名保持一致
         mobile: [
           { required: true, message: '请输入手机号', trigger: 'blur' },
           {
             pattern: /^(?:(?:\+|00)86)?1[3-9]\d{9}$/,
-            message: '手机号格式不正确',
-            trigger: 'blur'
-          }
+            message: '手机号码格式不正确',
+            trigger: 'blur',
+          },
         ],
         password: [
-          { required: true, message: '请输入密码', trigger: 'blur' }
+          { required: true, message: '请输入密码', trigger: 'blur' },
           // {
           //   pattern:
           //     /^(?![a-zA-Z]+$)(?![A-Z0-9]+$)(?![A-Z\W_!@#$%^&*`~()-+=]+$)(?![a-z0-9]+$)(?![a-z\W_!@#$%^&*`~()-+=]+$)(?![0-9\W_!@#$%^&*`~()-+=]+$)[a-zA-Z0-9\W_!@#$%^&*`~()-+=]/,
-          //   message: '密码需要包含数字+字母+特殊字符',
-          //   trigger: 'blur'
-          // }
-        ]
+          //   message: '密码请包含数字字母特殊字符,并且不能少于6位',
+          //   trigger: 'blur',
+          // },
+        ],
       },
-      // 按钮loading
-      loginloading: false
+      isLogin: false,
     }
   },
   methods: {
     async login() {
-      // this.$refs.loginForm.validate((boolean, errName) => {
-      //   console.log(boolean)
-      //   console.log(errName)
-      // })
-      this.loginloading = true
+      // console.log('点击登录')
+      this.isLogin = true
       try {
         await this.$refs.loginForm.validate()
-        // 触发vuex发送请求
         await this.$store.dispatch('user/getToken', this.loginForm)
-        // 跳转页面
         this.$router.push('/')
-        // 登录成功提示
         this.$message.success('登录成功')
-      } catch (error) {
-        console.log('失败')
       } finally {
-        this.loginloading = false
+        this.isLogin = false
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -124,6 +114,12 @@ $cursor: #68b0fe;
 .login-container {
   .el-form-item__error {
     color: #fff;
+  }
+  .loginBtn {
+    background: #407ffe;
+    height: 64px;
+    line-height: 32px;
+    font-size: 24px;
   }
   .el-input {
     display: inline-block;
@@ -153,9 +149,6 @@ $cursor: #68b0fe;
     border-radius: 5px;
     color: #454545;
   }
-  .el-form-item__content {
-    height: 52px;
-  }
 }
 </style>
 
@@ -164,9 +157,6 @@ $bg: #2d3a4b;
 $dark_gray: #889aa4;
 $light_gray: #eee;
 
-::v-deep.el-message--success {
-  background-color: skyblue;
-}
 .login-container {
   min-height: 100%;
   width: 100%;
@@ -182,12 +172,7 @@ $light_gray: #eee;
     margin: 0 auto;
     overflow: hidden;
   }
-  .loginBtn {
-    background: #407ffe;
-    height: 64px;
-    line-height: 32px;
-    font-size: 24px;
-  }
+
   .tips {
     font-size: 14px;
     color: #fff;
