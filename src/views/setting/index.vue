@@ -128,7 +128,7 @@ import {
   addRoleApi,
   removeRoleApi,
   getRolesInfo,
-  assignPerm,
+  assignPerm
 } from '@/api/role.js'
 import { getCompanyInfoApi } from '@/api/setting.js'
 import { getPermissionList } from '@/api/permission'
@@ -145,16 +145,16 @@ export default {
       addDialogVisible: false,
       addRoleForm: {
         name: '', // 部门名称
-        region: '',
+        region: ''
       },
       addRoleFormRules: {
-        name: [{ required: true, message: '请填写部门名称', trigger: 'blur' }],
+        name: [{ required: true, message: '请填写部门名称', trigger: 'blur' }]
       },
       companyInfo: {},
       setRightsDialog: false,
       permissions: [], // 权限树形数据
       defaultCheckKeys: [], // 分配权限选中项
-      roleId: '',
+      roleId: ''
     }
   },
 
@@ -171,7 +171,7 @@ export default {
     async getRoles() {
       const { rows, total } = await getRolesApi({
         page: this.page,
-        pagesize: this.pageSize,
+        pagesize: this.pageSize
       })
       this.tableData = rows
       this.total = total
@@ -210,7 +210,7 @@ export default {
       const res = await getCompanyInfoApi(
         this.$store.state.user.userInfo.companyId
       )
-      // console.log(res)
+      // //console.log(res)
       this.companyInfo = res
     },
     // 点击分配权限显示对话框
@@ -218,7 +218,7 @@ export default {
       this.roleId = id
       this.setRightsDialog = true
       const res = await getRolesInfo(id)
-      // console.log()
+      // //console.log()
       this.defaultCheckKeys = res.permIds
     },
     // 获取权限列表
@@ -229,19 +229,19 @@ export default {
     },
     // 监听设置权限对话框关闭
     setRightsClose() {
-      // console.log(123)
+      // //console.log(123)
       this.defaultCheckKeys = []
     },
     // 保存权限分配
     async onSaveRights() {
       await assignPerm({
         id: this.roleId,
-        permIds: this.$refs.perTree.getCheckedKeys(),
+        permIds: this.$refs.perTree.getCheckedKeys()
       })
       this.$message.success('分配成功')
       this.setRightsDialog = false
-    },
-  },
+    }
+  }
 }
 </script>
 

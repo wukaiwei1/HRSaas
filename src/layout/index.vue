@@ -7,6 +7,7 @@
     />
     <!-- 侧边栏 -->
     <sidebar class="sidebar-container" />
+    <!-- <el-button>安装到本地</el-button> -->
     <!-- 主体内容 -->
     <div class="main-container">
       <!-- 头部 -->

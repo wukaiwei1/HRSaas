@@ -92,28 +92,28 @@ export default {
         applyUnit: '按天',
         processKey: 'process_leave',
         processName: '请假',
-        userId: this.$store.getters.userId,
+        userId: this.$store.getters.userId
       },
       baseData: commonApi,
       opType: 7,
       options: [
         {
           value: 7,
-          label: '请假',
+          label: '请假'
         },
         {
           value: 18,
-          label: '调休',
-        },
+          label: '调休'
+        }
       ],
       duration: 0,
       rules: {
         start_time: [
-          { required: true, message: '开始时间', trigger: 'change' },
+          { required: true, message: '开始时间', trigger: 'change' }
         ],
         end_time: [{ required: true, message: '结束时间', trigger: 'change' }],
-        reason: [{ required: true, message: '加班原因', trigger: 'blur' }],
-      },
+        reason: [{ required: true, message: '加班原因', trigger: 'blur' }]
+      }
     }
   },
   computed: {
@@ -128,19 +128,19 @@ export default {
         duration = Math.floor(total / 2) + (total % 2) * 0.5
       }
       return duration
-    },
+    }
   },
   created() {},
   methods: {
     handleRemove(file, fileList) {
-      console.log(file, fileList)
+      //console.log(file, fileList)
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url
       this.dialogVisible = true
     },
     submitForm(name) {
-      console.log(this.ruleForm)
+      //console.log(this.ruleForm)
       startProcess(this.ruleForm).then((res) => {
         if (res.data.success) {
           this.$message.success(res.data.message)
@@ -163,7 +163,7 @@ export default {
       formData.append('holiday_type', this.ruleForm.holiday_type)
       formData.append('apply_unit', this.ruleForm.apply_unit)
       applyeLave(formData)
-    },
-  },
+    }
+  }
 }
 </script>

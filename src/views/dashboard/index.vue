@@ -3,7 +3,7 @@
     <!-- 头部内容 -->
     <el-card class="header-card">
       <div>
-        <span>{{ $t('message.hello') }}</span>
+        <!-- <span>{{ $t('message.hello') }}</span> -->
         <div class="fl headL">
           <div class="headImg">
             <img :src="$store.getters.avatar" v-imgError="defaultImg" />

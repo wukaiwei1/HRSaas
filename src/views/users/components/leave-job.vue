@@ -113,19 +113,19 @@ import {
   approvalsDel,
   approvalsPass,
   approvalsReject,
-  applyeLave,
+  applyeLave
 } from '@/api/approvals'
 export default {
   name: 'UsersTableIndex',
   props: {
     selectedId: {
       type: String,
-      default: '',
+      default: ''
     },
     tabLab: {
       type: String,
-      default: '',
-    },
+      default: ''
+    }
   },
 
   data() {
@@ -133,13 +133,13 @@ export default {
       dialogImageUrl: '',
       dialogVisible: false,
       timeValue: '',
-      ruleForm: {},
+      ruleForm: {}
     }
   },
   computed: {
     computeOpType() {
       return this.ruleForm.stateOfApproval !== '已撤销'
-    },
+    }
   },
   created() {
     this.init()
@@ -179,7 +179,7 @@ export default {
       this.$emit('closeDialog')
     },
     handleRemove(file, fileList) {
-      console.log(file, fileList)
+      //console.log(file, fileList)
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url
@@ -187,8 +187,8 @@ export default {
     },
     updateData() {
       this.init()
-    },
-  },
+    }
+  }
 }
 </script>
 

@@ -23,7 +23,7 @@ import components from '@/components'
 import * as filters from '@/filters'
 import Print from 'vue-print-nb'
 
-// console.log(Print)
+// //console.log(Print)
 Vue.use(Print)
 
 // 统一注册过滤器
@@ -38,10 +38,10 @@ for (let key in directives) {
 }
 
 // mock假数据
-if (process.env.NODE_ENV === 'production') {
-  const { mockXHR } = require('../mock')
-  mockXHR()
-}
+// if (process.env.NODE_ENV === 'production') {
+//   const { mockXHR } = require('../mock')
+//   mockXHR()
+// }
 
 // 注册element ui
 Vue.use(ElementUI, {

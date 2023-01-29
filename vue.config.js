@@ -15,6 +15,18 @@ const name = defaultSettings.title || 'vue Admin Template' // page title
 // port = 9528 npm run dev OR npm run dev --port = 9528
 const port = process.env.port || process.env.npm_config_port || 8080 // dev port
 
+let externals = {}
+
+// if (process.env.NODE_ENV === 'production') {
+//   externals = {
+//     echarts: 'echarts',
+//     'element-ui': 'ELEMENT',
+//     vue: 'Vue',
+//     xlsx: 'XLSX',
+//     'cos-js-sdk-v5': 'COS'
+//   }
+// }
+
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
   /**
@@ -24,7 +36,7 @@ module.exports = {
    * In most cases please use '/' !!!
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
-  publicPath: '/',
+  publicPath: './',
   outputDir: 'dist',
   assetsDir: 'static',
   lintOnSave: false,
@@ -55,6 +67,8 @@ module.exports = {
         '@': resolve('src')
       }
     }
+    // 排除 elementUI xlsx  和 vue
+    // externals
   },
   chainWebpack(config) {
     // it can improve the speed of the first screen, it is recommended to turn on preload
@@ -67,7 +81,10 @@ module.exports = {
         include: 'initial'
       }
     ])
-
+    config.plugin('html').tap((args) => {
+      args[0].myEnv = process.env.NODE_ENV
+      return args
+    })
     // when there are many pages, it will cause too many meaningless requests
     config.plugins.delete('prefetch')
 

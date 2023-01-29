@@ -23,19 +23,19 @@ export default {
   data() {
     return {
       checkList: [], // 记录选中的角色
-      roles: [],
+      roles: []
     }
   },
 
   props: {
     visible: {
       type: Boolean,
-      required: true,
+      required: true
     },
     employeesId: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
 
   created() {},
@@ -56,7 +56,7 @@ export default {
     },
     // 获取员工角色
     async getEmployeesRoles() {
-      // console.log()
+      // //console.log()
       const { roleIds } = await getUserDetail(this.employeesId)
       this.checkList = roleIds
     },
@@ -65,12 +65,12 @@ export default {
       if (!this.checkList.length) return this.$message.error('请选择角色')
       await assignRoles({
         id: this.employeesId,
-        roleIds: this.checkList,
+        roleIds: this.checkList
       })
       this.$message.success('分配成功')
       this.close()
-    },
-  },
+    }
+  }
 }
 </script>
 

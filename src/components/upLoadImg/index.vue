@@ -31,14 +31,14 @@
 import COS from 'cos-js-sdk-v5'
 var cos = new COS({
   SecretId: 'AKIDThiYZi4bhYJqJXIFjrVNL6dxHWYMl8cr',
-  SecretKey: 'FK58KNAqGRNL8i30JL9kMpPkuSk3DuLn',
+  SecretKey: 'FK58KNAqGRNL8i30JL9kMpPkuSk3DuLn'
 })
-console.log(cos)
+//console.log(cos)
 
 // 在企业开发 id和key怎么获取,肯定不是明文
 // var cos = new COS({
 //   getAuthorization: async function (option, callback) {
-//     console.log('获取鉴权12')
+//     //console.log('获取鉴权12')
 //     // 发送请求获取id和key
 //     const res = await axios.get('url')
 //     callback({
@@ -59,11 +59,11 @@ console.log(cos)
 //     StorageClass: 'STANDARD',
 //     Body: '', // 上传文件对象
 //     onProgress: function (progressData) {
-//       console.log(JSON.stringify(progressData))
+//       //console.log(JSON.stringify(progressData))
 //     },
 //   },
 //   function (err, data) {
-//     console.log(err || data)
+//     //console.log(err || data)
 //   }
 // )
 export default {
@@ -73,7 +73,7 @@ export default {
       fileList: [],
       previewImgDialog: false,
       imgUrl: '',
-      loading: false,
+      loading: false
     }
   },
 
@@ -90,8 +90,8 @@ export default {
           StorageClass: 'STANDARD',
           Body: file, // 上传文件对象
           onProgress: function (progressData) {
-            console.log(JSON.stringify(progressData))
-          },
+            //console.log(JSON.stringify(progressData))
+          }
         },
         (err, data) => {
           // 成功或值失败均进入该函数
@@ -102,7 +102,7 @@ export default {
             return this.$message.error('亲,上传失败,请重试')
           }
           this.$emit('onSuccess', {
-            url: 'https://' + data.Location,
+            url: 'https://' + data.Location
           })
         }
       )
@@ -114,7 +114,7 @@ export default {
       this.fileList = fileList
     },
     onPreview(file) {
-      console.log(file)
+      //console.log(file)
       this.previewImgDialog = true
       this.imgUrl = file.url
     },
@@ -132,9 +132,9 @@ export default {
         this.$message.error('选择的图片不能超出2mb')
         return false
       }
-      // console.log('上传前的检查', file)
-    },
-  },
+      // //console.log('上传前的检查', file)
+    }
+  }
 }
 </script>
 

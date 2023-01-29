@@ -102,19 +102,19 @@ import {
   approvalsDel,
   approvalsPass,
   approvalsReject,
-  applyOvertime,
+  applyOvertime
 } from '@/api/approvals'
 export default {
   name: 'Overtime',
   props: {
     selectedId: {
       type: String,
-      default: '',
+      default: ''
     },
     tabLab: {
       type: String,
-      default: '',
-    },
+      default: ''
+    }
   },
   data() {
     return {
@@ -123,13 +123,13 @@ export default {
       dialogVisible: false,
       timeValue: '',
       ruleForm: {},
-      rules: {},
+      rules: {}
     }
   },
   computed: {
     computeOpType() {
       return this.ruleForm.stateOfApproval !== '已撤销'
-    },
+    }
   },
   mounted() {
     this.init()
@@ -170,13 +170,13 @@ export default {
       this.init()
     },
     handleRemove(file, fileList) {
-      console.log(file, fileList)
+      //console.log(file, fileList)
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url
       this.dialogVisible = true
-    },
-  },
+    }
+  }
 }
 </script>
 

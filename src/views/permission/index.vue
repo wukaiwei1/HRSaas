@@ -90,17 +90,15 @@ export default {
         description: '', // 描述
         type: '', // 类型 该类型 不需要显示 因为点击添加的时候已经知道类型了
         pid: '', // 因为做的是树 需要知道添加到哪个节点下了
-        enVisible: '0', // 开启
+        enVisible: '0' // 开启
       },
       rules: {
         name: [
-          { required: true, message: '权限名称不能为空', trigger: 'blur' },
+          { required: true, message: '权限名称不能为空', trigger: 'blur' }
         ],
-        code: [
-          { required: true, message: '权限标识不能为空', trigger: 'blur' },
-        ],
+        code: [{ required: true, message: '权限标识不能为空', trigger: 'blur' }]
       },
-      showDialog: false,
+      showDialog: false
     }
   },
 
@@ -114,7 +112,7 @@ export default {
       this.permissions = transListToTree(res, '0')
     },
     expend(row) {
-      // console.log('点击展开', row)
+      // //console.log('点击展开', row)
       row.isExpand = !row.isExpand
       this.$refs.table.toggleRowExpansion(row, row.isExpand)
     },
@@ -131,8 +129,8 @@ export default {
         this.showDialog = false
         this.getPermissions()
       })
-    },
-  },
+    }
+  }
 }
 </script>
 

@@ -15,7 +15,7 @@ router.beforeEach(async (to, from, next) => {
     if (!store.state.user.userInfo.userId) {
       // 获取用户信息 store.dispatch的返回值是promise
       const { roles } = await store.dispatch('user/getUserInfo')
-      console.log(roles)
+      //console.log(roles)
       await store.dispatch('permission/filterRoutes', roles)
       await store.dispatch('permission/setPointsAction', roles.points)
       next(to.path)

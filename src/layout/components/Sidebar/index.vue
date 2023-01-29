@@ -20,6 +20,7 @@
         />
       </el-menu>
     </el-scrollbar>
+    <el-button class="lactionBtn">安装到本地</el-button>
   </div>
 </template>
 
@@ -55,7 +56,14 @@ export default {
     },
     isCollapse() {
       return !this.sidebar.opened
-    },
-  },
+    }
+  }
 }
 </script>
+<style scoped lang="scss">
+.lactionBtn {
+  position: absolute;
+  left: calc((210px - 112px) / 2);
+  bottom: 50px;
+}
+</style>

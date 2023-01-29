@@ -509,6 +509,7 @@ export default {
     },
     // 监听员工照片上传成功
     employeesPicSuccess({ url }) {
+      debugger
       this.formData.staffPhoto = url
     },
   },
